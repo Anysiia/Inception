@@ -11,7 +11,7 @@
 mysql -e "DELETE FROM mysql.user WHERE User='';"
 
 #Remove test database
-mysql -e "DROP DATABASE IF EXIST test;"
+mysql -e "DROP DATABASE IF EXISTS test;"
 mysql -e "DELETE FROM mysql.db WHERE Db='test' OR Db='test\_%';"
 
 #Create database 
