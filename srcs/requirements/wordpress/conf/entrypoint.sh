@@ -30,4 +30,4 @@ wp user create ${WP_USER} ${WP_MAIL} --role=author --user_pass=${WP_USER_PASSWOR
 
 #Launch php-fpm to etablished connection with nginx
 # --nodaemonize / -F => run on foreground
-exec php-fpm7 --nodaemonize
+exec php-fpm7 -F

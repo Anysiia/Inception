@@ -21,6 +21,8 @@ services:
     image: 42_mariadb
     volumes:
       - mariadb-volume:/var/lib/mysql
+    ports:
+      - 3306:3306
     networks:
       - mariadb-network
     environment:
@@ -39,6 +41,8 @@ services:
     image: 42_wordpress
     volumes:
       - wordpress-volume:/var/www/wordpress
+    ports:
+      - 9000:9000
     networks:
       - nginx-network
       - mariadb-network
