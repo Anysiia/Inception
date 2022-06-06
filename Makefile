@@ -48,7 +48,7 @@ log:
 	@$(COMPOSE) logs
 
 #Logs mariadb
-mdblog:
+dblog:
 	@$(DOCKER) logs 42mariadb
 
 #Logs wp
@@ -58,10 +58,6 @@ wplog:
 #Logs nginx
 nginxlog:
 	@$(DOCKER) logs 42nginx
-
-#Stop all containers
-down:
-	@$(COMPOSE) down
 
 #Stop all containers, their images and their volumes
 #Remove path and clear all environment
@@ -78,4 +74,4 @@ clean:
 #Redo the infra
 re:	clean all
 
-.PHONY: all list volumes network log mdblog wplog nginxlog down clean re
+.PHONY: all list volumes network log dblog wplog nginxlog clean re
