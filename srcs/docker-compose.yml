@@ -7,11 +7,11 @@ services:
       context: ./requirements/nginx
     image: 42_nginx
     volumes:
-      - wordpress-volume:/var/www/wordpress
+      - wordpress-volume:/var/www/html
     ports:
       - "443:443"
     networks:
-      - nginx-network
+      - front
     restart: unless-stopped
 
   mariadb:
@@ -24,7 +24,7 @@ services:
     ports:
       - 3306:3306
     networks:
-      - mariadb-network
+      - back
     environment:
       - MARIADB_DATABASE=${MARIADB_DATABASE}
       - MARIADB_USER=${MARIADB_USER}
@@ -35,17 +35,17 @@ services:
   wordpress:
     container_name: 42wordpress
     depends_on:
-      - mariadb
+      - 42mariadb
     build:
       context: ./requirements/wordpress
     image: 42_wordpress
     volumes:
-      - wordpress-volume:/var/www/wordpress
+      - wordpress-volume:/var/www/html
     ports:
       - 9000:9000
     networks:
-      - nginx-network
-      - mariadb-network
+      - front
+      - back
     environment:
       - MARIADB_DATABASE=${MARIADB_DATABASE}
       - MARIADB_USER=${MARIADB_USER}
@@ -76,5 +76,5 @@ volumes:
       o: bind
 
 networks:
-  nginx-network:
-  mariadb-network:
+  front:
+  back:
