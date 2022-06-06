@@ -75,6 +75,6 @@ clean:
 	@sudo chmod 644 /etc/hosts
 
 #Redo the infra
-re:	fclean all
+re:	clean all
 
 .PHONY: all list volumes network log mdblog wplog nginxlog down clean re
