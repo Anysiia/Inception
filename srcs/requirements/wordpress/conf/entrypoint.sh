@@ -1,5 +1,8 @@
 #!/bin/sh
-sleep 15
+
+while ! mariadb -h$MARIADB_HOST -u$MARIADB_USER -p$MARIADB_PASSWORD $MARIADB_DATABASE &>/dev/null; do
+    sleep 3
+done
 
 #Download wp-cli
 curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar

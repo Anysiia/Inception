@@ -65,7 +65,7 @@ down:
 
 #Stop all containers, their images and their volumes
 #Remove path and clear all environment
-fclean:
+clean:
 	@$(COMPOSE) down --volumes --rmi all --remove-orphans
 	@$(DOCKER) system prune --volumes --all --force
 	@sudo rm -rf $(DATA_PATH)
@@ -78,4 +78,4 @@ fclean:
 #Redo the infra
 re:	fclean all
 
-.PHONY: all list volumes network log mdblog wplog nginxlog down fclean re
+.PHONY: all list volumes network log mdblog wplog nginxlog down clean re
