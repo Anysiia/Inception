@@ -35,7 +35,7 @@ services:
   wordpress:
     container_name: 42wordpress
     depends_on:
-      - 42mariadb
+      - mariadb
     build:
       context: ./requirements/wordpress
     image: 42_wordpress
