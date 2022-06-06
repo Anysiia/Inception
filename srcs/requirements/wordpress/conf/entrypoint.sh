@@ -11,25 +11,28 @@ while ! mariadb -h$MARIADB_HOST -u$MARIADB_USER -p$MARIADB_PASSWORD $MARIADB_DAT
 	sleep 3
 done
 
+if [ ! -f "/var/www/html/index.html" ]; then
+    
+    #Download wp
+    wp core download --allow-root
 
-#Download wp
-wp core download --allow-root --path=/var/www/html
+    #wp-config file
+    wp config create --dbname=$MARIADB_DATABASE --dbuser=$MARIADB_USER --dbpass=$MARIADB_PASSWORD \
+        --dbhost=$MARIADB_HOST --dbcharset="utf8" --dbcollate="utf8_general_ci" --allow-root
 
-#Install WP
-wp core install --allow-root --url=${DOMAIN_NAME} --title=${WP_TITLE} \
-    --admin_user=${WP_ADMIN} --admin_password=${WP_ADMIN_PASSWORD} \
-    --admin_email=${WP_ADMIN_MAIL} --skip-email --path=/var/www/html
+    #Install 
+    wp core install --url=$DOMAIN_NAME --title=$WP_TITLE --admin_user=$WP_ADMIN \
+        --admin_password=$WP_ADMIN_PASSWORD --admin_email=$WP_ADMIN_MAIL --skip-email --allow-root
 
-#Install and activate theme
-wp theme activate twentyseventeen --allow-root --path=/var/www/html
+    #Install and activate theme
+    wp theme activate twentyseventeen --allow-root
 
-#Add a new user with author role
-wp user create ${WP_USER} ${WP_MAIL} --role=author --user_pass=${WP_USER_PASSWORD} \
-	--allow-root --path=/var/www/html
-
+    #Add a new user with author role
+    wp user create $WP_USER $WP_MAIL --role=author --user_pass=$WP_USER_PASSWORD --allow-root
+fi
 
 #Launch php-fpm to etablished connection with nginx
 # --nodaemonize / -F => Force to stay in foreground and ignore daemonize option from configuration file.
 # --allow-to-run-as-root /-R Allow pool to run as root (disabled by default)
 
-exec php-fpm7 -F
+/usr/sbin/php-fpm7 -F -R
