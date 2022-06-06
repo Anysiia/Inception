@@ -1,12 +1,10 @@
 FROM alpine:3.14
 
-RUN apk update --quiet
-RUN apk upgrade --quiet
+RUN apk update --quiet ; \
+	apk upgrade --quiet
 
 #Install nginx and usefull packages
-RUN apk add --quiet nginx 
-RUN apk add --quiet openssl
-RUN apk add --quiet openrc
+RUN apk add --quiet nginx openssl
 
 #Create directories
 RUN mkdir -p /var/www/wordpress && mkdir -p /etc/nginx/ssl
@@ -20,11 +18,9 @@ RUN openssl req -newkey rsa:4096 -x509 -sha256 -nodes -days 365\
 # Server configuration
 COPY ./conf/nginx.conf /etc/nginx/http.d/default.conf
 
-RUN rc-update add nginx default
-
 RUN ln -sf /dev/stdout /var/log/nginx/access.log ; \
 	ln -sf /dev/stderr /var/log/nginx/error.log
 
 EXPOSE 443
 
-CMD ["nginx", "-g", "daemon off;"]
+ENTRYPOINT ["nginx", "-g", "daemon off;"]
