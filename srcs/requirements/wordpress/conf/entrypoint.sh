@@ -13,10 +13,6 @@ mv wp-cli.phar /usr/local/bin/wp
 #Download wp
 wp core download --allow-root --path=/var/www/wordpress --quiet
 
-#Set wp-config.php
-rm -f /var/www/wordpress/wp-config.php
-cp ./wp-config.php /var/www/wordpress/wp-config.php
-
 #Install WP
 wp core install --allow-root --url=${DOMAIN_NAME} --title=${WP_TITLE} \
     --admin_user=${WP_ADMIN} --admin_password=${WP_ADMIN_PASSWORD} \
