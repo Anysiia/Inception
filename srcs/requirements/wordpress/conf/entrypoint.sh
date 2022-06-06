@@ -1,7 +1,8 @@
 #!/bin/sh
 
 while ! mariadb -h$MARIADB_HOST -u$MARIADB_USER -p$MARIADB_PASSWORD $MARIADB_DATABASE &>/dev/null; do
-    sleep 3
+    echo "Not connected to inceptiondb"
+	sleep 3
 done
 
 #Download wp-cli

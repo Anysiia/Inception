@@ -76,6 +76,6 @@ clean:
 	@rm -f .dns
 
 #Redo the infra
-re:	fclean all
+re:	clean all
 
 .PHONY: all list volumes network log mdblog wplog nginxlog down clean re
