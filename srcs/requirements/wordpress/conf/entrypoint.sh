@@ -30,5 +30,7 @@ wp user create ${WP_USER} ${WP_MAIL} --role=author --user_pass=${WP_USER_PASSWOR
 	--allow-root --path=/var/www/wordpress --quiet
 
 #Launch php-fpm to etablished connection with nginx
-# --nodaemonize / -F => run on foreground
+# --nodaemonize / -F => Force to stay in foreground and ignore daemonize option from configuration file.
+# --allow-to-run-as-root /-R Allow pool to run as root (disabled by default)
+
 exec php-fpm7 -F
