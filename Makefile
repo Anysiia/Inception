@@ -13,16 +13,16 @@
 DATA_PATH := /home/cmorel-a/data
 DOCKER := sudo docker
 COMPOSE := cd ./srcs/ && sudo docker-compose
+DNS_SETUP = $(shell cat /etc/hosts | grep 'cmorel-a' | wc -l)
 
 #Create path for volumes, change dns host and start infra
 all:
 	@sudo mkdir -p $(DATA_PATH)/database
 	@sudo mkdir -p $(DATA_PATH)/wordpress
-ifeq ("$(wildcard .setup)", "")
+ifeq ($(DNS_SETUP), "0")
 	@echo "DNS redirection\n"
 	@sudo chmod 666 /etc/hosts
 	@sudo echo "127.0.0.1	cmorel-a.42.fr" >> /etc/hosts
-	@touch .setup
 endif
 	@$(COMPOSE) up --build -d --remove-orphans
 
@@ -73,7 +73,6 @@ clean:
 	@$(DOCKER) volume prune --force
 	@sudo sed -i '/127.0.0.1	cmorel-a.42.fr/d' /etc/hosts
 	@sudo chmod 644 /etc/hosts
-	@rm -f .setup
 
 #Redo the infra
 re:	fclean all
