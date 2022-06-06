@@ -18,12 +18,9 @@ COMPOSE := cd ./srcs/ && sudo docker-compose
 all:
 	@sudo mkdir -p $(DATA_PATH)/database
 	@sudo mkdir -p $(DATA_PATH)/wordpress
-ifeq ("$(wildcard .dns)", "")
 	@echo "DNS redirection for cmorel-a.42.fr"
 	@sudo chmod 666 /etc/hosts
 	@sudo echo "127.0.0.1	cmorel-a.42.fr" >> /etc/hosts
-	@touch .dns
-endif
 	@$(COMPOSE) up --build -d --remove-orphans
 
 #List all containers
@@ -69,7 +66,6 @@ clean:
 	@$(DOCKER) volume prune --force
 	@sudo sed -i '/127.0.0.1	cmorel-a.42.fr/d' /etc/hosts
 	@sudo chmod 644 /etc/hosts
-	@rm -f .dns
 
 #Redo the infra
 re:	clean all
