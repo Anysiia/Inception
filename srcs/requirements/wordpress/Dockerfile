@@ -11,24 +11,18 @@ FROM alpine:3.14
 RUN apk update --quiet
 RUN apk upgrade --quiet
 
-RUN apk add --quiet curl mariadb-client
+RUN apk add --quiet wget curl mariadb-client
 RUN apk add --quiet php7 php7-fpm php7-json php7-mysqli php7-curl php7-mbstring php7-phar
 
-RUN rm -f /etc/php7/php-fpm.d/www.conf
-COPY ./conf/phpfpm.conf /etc/php7/php-fpm.d/www.conf
-COPY ./conf/wp-config.php ./
+COPY ./conf/php-fpm.conf /etc/php7/php-fpm.conf
+COPY ./conf/www.conf /etc/php7/php-fpm.d/www.conf
 
-RUN mkdir -p /var/www/wordpress
-RUN set -x ; \
-	addgroup -g 82 -S www-data ; \
-	adduser -u 82 -D -S -G www-data www-data && exit 0 ; exit 1
-# 82 is the standard uid/gid for "www-data" in Alpine
-RUN chmod 755 -R /var/www/wordpress
-RUN chown -R www-data:www-data /var/www/wordpress
+RUN adduser -S nginx ; \
+	addgroup -S nginx
 
-COPY ./conf/entrypoint.sh   ./
-RUN chmod +x entrypoint.sh
+WORKDIR /var/www/html/
 
-EXPOSE 9000
+COPY ./conf/entrypoint.sh   /tmp/conf.sh
+RUN chmod +x /tmp/conf.sh
 
-ENTRYPOINT [ "./entrypoint.sh" ]
+ENTRYPOINT [ "sh", "/tmp/conf.sh" ]
