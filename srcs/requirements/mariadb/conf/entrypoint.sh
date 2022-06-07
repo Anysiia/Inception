@@ -5,7 +5,7 @@ chown -R mysql:mysql /run/mysqld
 chmod 766 /var/lib/mysql
 chown -R mysql:mysql /var/lib/mysql
 
-if [ ! d "/var/lib/mysql/mysql" ]
+if [ ! -d "/var/lib/mysql/mysql" ]
 then
     echo "Initialisation of mysql"
 
