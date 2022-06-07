@@ -5,7 +5,8 @@ chown -R mysql:mysql /run/mysqld
 chmod 766 /var/lib/mysql
 chown -R mysql:mysql /var/lib/mysql
 
-if [ ! d "/var/lib/mysql/mysql" ]; then
+if [ ! d "/var/lib/mysql/mysql" ]
+then
     echo "Initialisation of mysql"
 
     #Init db
@@ -14,8 +15,6 @@ if [ ! d "/var/lib/mysql/mysql" ]; then
     /usr/bin/mysqld --user=mysql
 
     mysql -e "USE mysql;"
-    mysql -e "FLUSH PRIVILEGES;"
-    
     mysql -e "DELETE FROM mysql.user WHERE User='';"
     mysql -e "DROP DATABASE IF EXISTS test;"
     mysql -e "DELETE FROM mysql.db WHERE Db='test' OR Db='test\_%';"
