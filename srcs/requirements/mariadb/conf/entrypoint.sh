@@ -1,17 +1,17 @@
 #!/bin/sh
 
-
 mkdir -p /run/mysqld
 chown -R mysql:mysql /run/mysqld
+chmod 766 /var/lib/mysql
+chown -R mysql:mysql /var/lib/mysql
 
 if [ ! d "/var/lib/mysql/mysql" ]; then
-    chmod 766 /var/lib/mysql
-    chown -R mysql:mysql /var/lib/mysql
+    echo "Initialisation of mysql"
 
     #Init db
     mysql_install_db --basedir=/usr --datadir=/var/lib/mysql --user=mysql --rpm > /dev/null
 
-    /usr/bin/mysqld --user=mysql --skip-grant-tables --bootstrap < $tmp
+    /usr/bin/mysqld --user=mysql
 
     mysql -e "USE mysql;"
     mysql -e "FLUSH PRIVILEGES;"
@@ -34,4 +34,4 @@ sed -i "s|skip-networking|# skip-networking|g" /etc/my.cnf.d/mariadb-server.cnf
 sed -i "s|.*bind-address\s*=.*|bind-address=0.0.0.0|g" /etc/my.cnf.d/mariadb-server.cnf
 
 pkill mysqld
-exec /usr/bin/mysqld --skip-grant-tables --user=mysql --console
+exec /usr/bin/mysqld --user=mysql --console
