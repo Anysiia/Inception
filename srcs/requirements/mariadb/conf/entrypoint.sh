@@ -13,7 +13,7 @@ then
     chown -R mysql:mysql /var/lib/mysql
 
     #Init db
-    mysql_install_db --basedir=/usr --datadir=/var/lib/mysql --user=mysql --rpm > /dev/null
+    mysql_install_db --basedir=/usr --datadir=/var/lib/mysql --user=mysql
 
     /usr/bin/mysqld --user=mysql
 
