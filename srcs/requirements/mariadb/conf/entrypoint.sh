@@ -1,13 +1,16 @@
 #!/bin/sh
 
-mkdir -p /run/mysqld
-chown -R mysql:mysql /run/mysqld
-chmod 766 /var/lib/mysql
-chown -R mysql:mysql /var/lib/mysql
+if [ ! -d "/run/mysqld"]
+then
+    mkdir -p /run/mysqld
+    chown -R mysql:mysql /run/mysqld
+fi 
 
 if [ ! -d "/var/lib/mysql/mysql" ]
 then
     echo "Initialisation of mysql"
+    chmod 766 /var/lib/mysql
+    chown -R mysql:mysql /var/lib/mysql
 
     #Init db
     mysql_install_db --basedir=/usr --datadir=/var/lib/mysql --user=mysql --rpm > /dev/null
@@ -25,6 +28,7 @@ then
     mysql -e "GRANT ALL PRIVILEGES ON ${MARIADB_DATABASE}.* TO ${MARIADB_USER}'@'%';"
     mysql -e "ALTER USER 'root'@'localhost' IDENTIFIED BY '${MARIADB_ROOT_PASSWORD}';"
     mysql -e "FLUSH PRIVILEGES;"
+    pkill mysqld
 
 fi
 
@@ -32,5 +36,4 @@ fi
 sed -i "s|skip-networking|# skip-networking|g" /etc/my.cnf.d/mariadb-server.cnf
 sed -i "s|.*bind-address\s*=.*|bind-address=0.0.0.0|g" /etc/my.cnf.d/mariadb-server.cnf
 
-pkill mysqld
 exec /usr/bin/mysqld --user=mysql --console
