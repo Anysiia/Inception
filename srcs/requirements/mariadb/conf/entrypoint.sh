@@ -1,5 +1,9 @@
 #!/bin/sh
 
+#Config to allow connections
+sed -i "s|skip-networking|# skip-networking|g" /etc/my.cnf.d/mariadb-server.cnf
+sed -i "s|.*bind-address\s*=.*|bind-address=0.0.0.0|g" /etc/my.cnf.d/mariadb-server.cnf
+
 if [ ! -d "/run/mysqld" ]
 then
     mkdir -p /run/mysqld
@@ -15,7 +19,7 @@ then
     #Init db
     mysql_install_db --basedir=/usr --datadir=/var/lib/mysql --user=mysql
 
-    /usr/bin/mysqld --user=mysql
+    /usr/bin/mysqld --user=mysql & sleep 2
 
     echo "un"
     sudo mysql -e "USE mysql;"
@@ -30,16 +34,8 @@ then
     sudo mysql -e "GRANT ALL PRIVILEGES ON ${MARIADB_DATABASE}.* TO ${MARIADB_USER}'@'%';"
     sudo mysql -e "ALTER USER 'root'@'localhost' IDENTIFIED BY '${MARIADB_ROOT_PASSWORD}';"
     sudo mysql -e "FLUSH PRIVILEGES;"
-    
-    echo "three"
-    pkill mysqld
 
+    pkill mysqld
 fi
 
-echo "edit .cnf file"
-#Config to allow connections
-sed -i "s|skip-networking|# skip-networking|g" /etc/my.cnf.d/mariadb-server.cnf
-sed -i "s|.*bind-address\s*=.*|bind-address=0.0.0.0|g" /etc/my.cnf.d/mariadb-server.cnf
-
-echo "relaunch"
-exec /usr/bin/mysqld --user=mysql --console
+/usr/bin/mysqld --user=mysql
