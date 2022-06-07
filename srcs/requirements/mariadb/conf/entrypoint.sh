@@ -22,18 +22,18 @@ then
     /usr/bin/mysqld --user=mysql & sleep 2
 
     echo "un"
-    sudo mysql -e "USE mysql;"
-    sudo mysql -e "DELETE FROM mysql.user WHERE User='';"
-    sudo mysql -e "DROP DATABASE IF EXISTS test;"
-    sudo mysql -e "DELETE FROM mysql.db WHERE Db='test' OR Db='test\_%';"
-    sudo mysql -e "DELETE FROM mysql.user WHERE User='root' AND Host NOT IN ('localhost', '127.0.0.1', '::1');" 
+    mysql -e "USE mysql;"
+    mysql -e "DELETE FROM mysql.user WHERE User='';"
+    mysql -e "DROP DATABASE IF EXISTS test;"
+    mysql -e "DELETE FROM mysql.db WHERE Db='test' OR Db='test\_%';"
+    mysql -e "DELETE FROM mysql.user WHERE User='root' AND Host NOT IN ('localhost', '127.0.0.1', '::1');" 
     
     echo "two"
-    sudo mysql -e "CREATE DATABASE IF NOT EXISTS ${MARIADB_DATABASE} CHARACTER SET utf8 COLLATE utf8_general_ci;"
-    sudo mysql -e "CREATE USER IF NOT EXISTS ${MARIADB_USER}'@'%' IDENTIFIED BY ${MARIADB_PASSWORD};"
-    sudo mysql -e "GRANT ALL PRIVILEGES ON ${MARIADB_DATABASE}.* TO ${MARIADB_USER}'@'%';"
-    sudo mysql -e "ALTER USER 'root'@'localhost' IDENTIFIED BY '${MARIADB_ROOT_PASSWORD}';"
-    sudo mysql -e "FLUSH PRIVILEGES;"
+    mysql -e "CREATE DATABASE IF NOT EXISTS ${MARIADB_DATABASE} CHARACTER SET utf8 COLLATE utf8_general_ci;"
+    mysql -e "CREATE USER IF NOT EXISTS ${MARIADB_USER}'@'%' IDENTIFIED BY ${MARIADB_PASSWORD};"
+    mysql -e "GRANT ALL PRIVILEGES ON ${MARIADB_DATABASE}.* TO ${MARIADB_USER}'@'%';"
+    mysql -e "ALTER USER 'root'@'localhost' IDENTIFIED BY '${MARIADB_ROOT_PASSWORD}';"
+    mysql -e "FLUSH PRIVILEGES;"
 
     pkill mysqld
 fi
