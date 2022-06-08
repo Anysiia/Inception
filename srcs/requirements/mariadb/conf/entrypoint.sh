@@ -28,7 +28,7 @@ then
     mysql -e "GRANT ALL PRIVILEGES ON \`${MARIADB_DATABASE}\`.* TO \`${MARIADB_USER}\`@'%';"
     mysql -e "ALTER USER 'root'@'localhost' IDENTIFIED BY '${MARIADB_ROOT_PASSWORD}';"
     mysql -e "FLUSH PRIVILEGES;"
-    echo "Configuration is complete"
+    
 
     pkill mysqld
 fi
