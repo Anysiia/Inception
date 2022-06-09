@@ -1,13 +1,16 @@
 FROM alpine:3.14
 
-RUN apk update --quiet ; \
-	apk upgrade --quiet
+#Install nginx and openssl
+RUN apk update -q ; \
+	apk upgrade -q ; \
+	apk add -q nginx \
+		openssl
 
-#Install nginx and usefull packages
-RUN apk add --quiet nginx openssl
-
-#Create directories
-RUN mkdir -p /var/www/wordpress && mkdir -p /etc/nginx/ssl
+#Create directories and conf for log and access
+RUN mkdir -p /var/www/wordpress ; \
+	mkdir -p /etc/nginx/ssl ; \
+	ln -sf /dev/stdout /var/log/nginx/access.log ; \
+	ln -sf /dev/stderr /var/log/nginx/error.log
 
 # Create self-signed ssl key
 RUN openssl req -newkey rsa:4096 -x509 -sha256 -nodes -days 365\
@@ -17,9 +20,6 @@ RUN openssl req -newkey rsa:4096 -x509 -sha256 -nodes -days 365\
 
 # Server configuration
 COPY ./conf/nginx.conf /etc/nginx/http.d/default.conf
-
-RUN ln -sf /dev/stdout /var/log/nginx/access.log ; \
-	ln -sf /dev/stderr /var/log/nginx/error.log
 
 EXPOSE 443
 

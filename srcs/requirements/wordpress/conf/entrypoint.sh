@@ -1,5 +1,8 @@
 #!/bin/sh
 
+mv /tmp/php-fpm.conf /etc/php7/php-fpm.conf
+mv /tmp/www.conf    /etc/php7/php-fpm.d/www.conf
+
 #Download wp-cli
 curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
 chmod +x wp-cli.phar
@@ -15,21 +18,19 @@ done
 if [ ! -f "/var/www/html/index.html" ]; then
     
     #Download wp
-    wp core download --allow-root
+    wp core download --path=/var/www/html --allow-root
 
-    #wp-config file
-    wp config create --dbname=$MARIADB_DATABASE --dbuser=$MARIADB_USER --dbpass=$MARIADB_PASSWORD \
-        --dbhost=$MARIADB_HOST --dbcharset="utf8" --dbcollate="utf8_general_ci" --allow-root
+    cp /tmp/wp-config.php /var/www/html/wp-config.php
 
     #Install 
-    wp core install --url=$DOMAIN_NAME --title=$WP_TITLE --admin_user=$WP_ADMIN \
+    wp core install --path=/var/www/html --url=$DOMAIN_NAME --title=$WP_TITLE --admin_user=$WP_ADMIN \
         --admin_password=$WP_ADMIN_PASSWORD --admin_email=$WP_ADMIN_MAIL --skip-email --allow-root
 
     #Install and activate theme
-    wp theme activate twentyseventeen --allow-root
+    wp theme activate twentyseventeen --path=/var/www/html --allow-root
 
     #Add a new user with author role
-    wp user create $WP_USER $WP_MAIL --role=author --user_pass=$WP_USER_PASSWORD --allow-root
+    wp user create $WP_USER $WP_MAIL --role=author --user_pass=$WP_USER_PASSWORD --path=/var/www/html --allow-root
 fi
 
 #Launch php-fpm to etablished connection with nginx
