@@ -18,7 +18,7 @@ mv wp-cli.phar /usr/local/bin/wp
 
 sleep 15
 
-if [ ! -f "/var/www/html/index.html" ]; then
+if [ ! -f "/var/www/html/index.php" ]; then
     
     #Download wp
     wp core download --path=/var/www/html --allow-root
