@@ -5,12 +5,15 @@ curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.pha
 chmod +x wp-cli.phar
 mv wp-cli.phar /usr/local/bin/wp
 
+
 #Waiting for mariadb
-while ! mysql -h$MARIADB_HOST -u$MARIADB_USER -p$MARIADB_PASSWORD $MARIADB_DATABASE &>/dev/null;
-do
-    echo "Not connected to $MARIADB_DATABASE (host: $MARIADB_HOST user: $MARIADB_USER pass: $MARIADB_PASSWORD)"
-	sleep 3
-done
+#while ! mysql -h$MARIADB_HOST -u$MARIADB_USER -p$MARIADB_PASSWORD $MARIADB_DATABASE &>/dev/null;
+#do
+#    echo "Not connected to $MARIADB_DATABASE (host: $MARIADB_HOST user: $MARIADB_USER pass: $MARIADB_PASSWORD)"
+#	sleep 3
+#done
+
+sleep 15
 
 if [ ! -f "/var/www/html/index.html" ]; then
     
