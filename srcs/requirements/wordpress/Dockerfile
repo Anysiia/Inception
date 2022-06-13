@@ -18,7 +18,8 @@ RUN apk update -q ; \
 		php7-mysqli \
 		php7-curl \
 		php7-mbstring \
-		php7-phar
+		php7-phar \
+		zip
 
 COPY conf /tmp/
 

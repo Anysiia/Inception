@@ -12,7 +12,7 @@ mv wp-cli.phar /usr/local/bin/wp
 #Waiting for mariadb
 while ! mariadb -h$MARIADB_HOST -u$MARIADB_USER -p$MARIADB_PASSWORD $MARIADB_DATABASE &>/dev/null;
 do
-    echo "Not connected to $MARIADB_DATABASE (host: $MARIADB_HOST user: $MARIADB_USER pass: $MARIADB_PASSWORD)"
+    echo "Not connected to $MARIADB_DATABASE. Retry..."
 	sleep 3
 done
 
@@ -28,7 +28,7 @@ if [ ! -f "/var/www/html/index.php" ]; then
         --admin_password=$WP_ADMIN_PASSWORD --admin_email=$WP_ADMIN_MAIL --skip-email --allow-root
 
     #Install and activate theme
-    #wp theme activate twentyseventeen --allow-root
+    wp theme install twentyseventeen --activate --force --allow-root
 
     #Add a new user with author role
     wp user create $WP_USER $WP_USER_MAIL --role=author --user_pass=$WP_USER_PASSWORD
