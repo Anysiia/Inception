@@ -10,13 +10,11 @@ mv wp-cli.phar /usr/local/bin/wp
 
 
 #Waiting for mariadb
-#while ! mysql -h$MARIADB_HOST -u$MARIADB_USER -p$MARIADB_PASSWORD $MARIADB_DATABASE &>/dev/null;
-#do
-#    echo "Not connected to $MARIADB_DATABASE (host: $MARIADB_HOST user: $MARIADB_USER pass: $MARIADB_PASSWORD)"
-#	sleep 3
-#done
-
-sleep 15
+while ! mariadb -h$MARIADB_HOST -u$MARIADB_USER -p$MARIADB_PASSWORD $MARIADB_DATABASE &>/dev/null;
+do
+    echo "Not connected to $MARIADB_DATABASE (host: $MARIADB_HOST user: $MARIADB_USER pass: $MARIADB_PASSWORD)"
+	sleep 3
+done
 
 if [ ! -f "/var/www/html/index.php" ]; then
     
