@@ -24,7 +24,7 @@ then
     mysql -e "DROP DATABASE IF EXISTS test;"
     mysql -e "DELETE FROM mysql.db WHERE Db='test' OR Db='test\_%';"
     mysql -e "DELETE FROM mysql.user WHERE User='root' AND Host NOT IN ('localhost', '127.0.0.1', '::1');"
-    mysql -e "GRANT ALL ON *.* TO 'root'@'172.%' IDENTIFIED BY '${MARIADB_ROOT_PASSWORD}';"  
+    mysql -e "GRANT ALL ON *.* TO 'root'@'%' IDENTIFIED BY '${MARIADB_ROOT_PASSWORD}';"  
     mysql -e "CREATE DATABASE IF NOT EXISTS ${MARIADB_DATABASE} CHARACTER SET utf8 COLLATE utf8_general_ci;"
     mysql -e "CREATE USER IF NOT EXISTS \`${MARIADB_USER}\`@'localhost' IDENTIFIED BY '${MARIADB_PASSWORD}';"
     mysql -e "GRANT ALL PRIVILEGES ON \`${MARIADB_DATABASE}\`.* TO \`${MARIADB_USER}\`@'%' IDENTIFIED BY '${MARIADB_PASSWORD}';"

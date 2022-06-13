@@ -28,10 +28,10 @@ if [ ! -f "/var/www/html/index.php" ]; then
         --admin_password=$WP_ADMIN_PASSWORD --admin_email=$WP_ADMIN_MAIL --skip-email --allow-root
 
     #Install and activate theme
-    wp theme activate twentyseventeen --path=/var/www/html --allow-root
+    #wp theme activate twentyseventeen --allow-root
 
     #Add a new user with author role
-    wp user create $WP_USER $WP_MAIL --role=author --user_pass=$WP_USER_PASSWORD --path=/var/www/html --allow-root
+    wp user create $WP_USER $WP_USER_MAIL --role=author --user_pass=$WP_USER_PASSWORD
 fi
 
 #Launch php-fpm to etablished connection with nginx
