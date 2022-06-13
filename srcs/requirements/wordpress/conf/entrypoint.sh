@@ -21,8 +21,7 @@ if [ ! -f "/var/www/html/index.php" ]; then
     #Download wp
     wp core download --path=/var/www/html --allow-root
 
-   # cp /tmp/wp-config.php /var/www/html/wp-config.php
-
+    #Create wp-config file
     wp config create --dbname=$MARIADB_DATABASE --dbuser=$MARIADB_USER --dbpass=$MARIADB_PASSWORD \
         --dbhost=$MARIADB_HOST:3306 --dbprefix=$WP_PREFIX --dbcharset='utf8' --dbcollate='utf8_general_ci' \
         --force --path=/var/www/html --allow-root 
