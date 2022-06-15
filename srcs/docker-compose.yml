@@ -60,6 +60,7 @@ services:
       - WP_PREFIX=${WP_PREFIX}
       - WP_TITLE=${WP_TITLE}
       - WP_URL=${WP_URL}
+      - WP_TAGLINE=${WP_TAGLINE}
     restart: unless-stopped
 
 volumes:

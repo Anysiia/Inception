@@ -39,6 +39,9 @@ if [ ! -f "/var/www/html/index.php" ]; then
     #Change URL
     wp option update home $WP_URL
     wp option update siteurl $WP_URL
+
+    #Change tagline
+    wp option update blogdescription $WP_TAGLINE
 fi
 
 #Launch php-fpm to etablished connection with nginx
