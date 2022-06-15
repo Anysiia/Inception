@@ -27,7 +27,7 @@ if [ ! -f "/var/www/html/index.php" ]; then
         --force --path=/var/www/html --allow-root 
 
     #Install 
-    wp core install --path=/var/www/html --url=$DOMAIN_NAME --title=$WP_TITLE --admin_user=$WP_ADMIN \
+    wp core install --path=/var/www/html --url=$WP_URL --title=$WP_TITLE --admin_user=$WP_ADMIN \
         --admin_password=$WP_ADMIN_PASSWORD --admin_email=$WP_ADMIN_MAIL --skip-email --allow-root
 
     #Add a new user with author role
@@ -37,8 +37,8 @@ if [ ! -f "/var/www/html/index.php" ]; then
     wp theme install twentyseventeen --activate --force --allow-root
 
     #Change URL
-    wp option update home $WP_URL
-    wp option update siteurl $WP_URL
+ #   wp option update home $WP_URL
+ #   wp option update siteurl $WP_URL
 
     #Change tagline
     wp option update blogdescription $WP_TAGLINE
