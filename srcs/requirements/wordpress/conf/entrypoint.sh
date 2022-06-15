@@ -36,8 +36,9 @@ if [ ! -f "/var/www/html/index.php" ]; then
     #Install theme and activate 
     wp theme install twentyseventeen --activate --force --allow-root
 
-    wp option update home 'http://cmorel-a.42.fr'
-    wp option update siteurl 'http://cmorel-a.42.fr'
+    #Change URL
+    wp option update home $WP_URL
+    wp option update siteurl $WP_URL
 fi
 
 #Launch php-fpm to etablished connection with nginx
