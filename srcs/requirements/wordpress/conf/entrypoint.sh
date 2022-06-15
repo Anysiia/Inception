@@ -36,10 +36,6 @@ if [ ! -f "/var/www/html/index.php" ]; then
     #Install theme and activate 
     wp theme install twentyseventeen --activate --force --allow-root
 
-    #Change URL
- #   wp option update home $WP_URL
- #   wp option update siteurl $WP_URL
-
     #Change tagline
     wp option update blogdescription $WP_TAGLINE
 fi
