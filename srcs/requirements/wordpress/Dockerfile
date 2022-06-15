@@ -15,19 +15,14 @@ RUN apk update -q ; \
 		php7-dom \
 		php7-exif \
 		php7-fileinfo \
-		php7-filter \
 		php7-fpm \
 		php7-gd \
-		php7-hash \
 		php7-iconv \
 		php7-imagick \
 		php7-json \
-		php7-mbregex \
 		php7-mbstring \
-		php7-mycrypt \
 		php7-mysqli \
 		php7-openssl \
-		php7-pcre \
 		php7-phar \
 		php7-simplexml \
 		php7-sodium \

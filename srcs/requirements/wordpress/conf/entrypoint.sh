@@ -30,13 +30,14 @@ if [ ! -f "/var/www/html/index.php" ]; then
     wp core install --path=/var/www/html --url=$DOMAIN_NAME --title=$WP_TITLE --admin_user=$WP_ADMIN \
         --admin_password=$WP_ADMIN_PASSWORD --admin_email=$WP_ADMIN_MAIL --skip-email --allow-root
 
-    #Install and activate theme
-    wp theme install twentyseventeen --activate --force --allow-root
-
     #Add a new user with author role
     wp user create $WP_USER $WP_USER_MAIL --role=author --user_pass=$WP_USER_PASSWORD
 
-    wp ext check
+    #Install theme and activate 
+    wp theme install twentyseventeen --activate --force --allow-root
+
+    wp option update home 'http://cmorel-a.42.fr'
+    wp option update siteurl 'http://cmorel-a.42.fr'
 fi
 
 #Launch php-fpm to etablished connection with nginx
