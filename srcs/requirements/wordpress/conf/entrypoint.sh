@@ -35,6 +35,8 @@ if [ ! -f "/var/www/html/index.php" ]; then
 
     #Add a new user with author role
     wp user create $WP_USER $WP_USER_MAIL --role=author --user_pass=$WP_USER_PASSWORD
+
+    wp ext check
 fi
 
 #Launch php-fpm to etablished connection with nginx
