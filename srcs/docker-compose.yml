@@ -41,8 +41,8 @@ services:
     image: 42_wordpress
     volumes:
       - wordpress-volume:/var/www/html
-    ports:
-      - 9000:9000
+    #ports:
+     # - 9000:9000
     networks:
       - front
       - back
